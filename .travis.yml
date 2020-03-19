@@ -78,6 +78,7 @@ script:
 - echo test2 password ${TEST2_PASSWORD}
 - if [ "${H5_DRIVER}" == "hsds" ]; then
     echo "setting up HSDS folders" ;
+    curl ${HS_ENDPOINT}/about ;
     hstouch -u admin -p admin /home/ ;
     hstouch -u admin -p admin -o test_user1 /home/test_user1/ ;
     hstouch /home/test_user1/h5pyd_test/ ;
