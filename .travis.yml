@@ -17,23 +17,30 @@ install:
 - pip install pytz
 - pip install h5py
 - if [ "${H5_DRIVER}" == "h5serv" ]; then
-     pip install tornado ;
-     pip install watchdog ;
-     git clone https://github.com/HDFGroup/hdf5-json.git ;
-     cd hdf5-json ;
-     python setup.py install ;
-     cd .. ;
-     git clone https://github.com/HDFGroup/h5serv.git ;
+    pip install tornado ;
+    pip install watchdog ;
+    git clone https://github.com/HDFGroup/hdf5-json.git ;
+    cd hdf5-json ;
+    python setup.py install ;
+    cd .. ;
+    git clone https://github.com/HDFGroup/h5serv.git ;
   else
-     pip install aiohttp ;
-     pip install awscli ;
-     git clone https://github.com/HDFGroup/hsds.git ;
-     cd hsds ;
-     ./build.sh --nolint ;
-     ./runall.sh ;
-     echo "server starting..."
-     sleep 20 ;
-     cd - ;
+    pip install aiohttp ;
+    git clone https://github.com/HDFGroup/hsds.git ;
+    cd hsds ;
+    cp admin/config/passwd.default admin/config/passwd.txt ;
+    export ADMIN_PASSWORD=admin ;
+    export ROOT_DIR=${HOME}/buckets ;
+    export SN_PORT=5101 ;
+    export HSDS_ENDPOINT=http://localhost:5101 ;
+    export BUCKET_NAME=hsds.test ;
+    docker build -t hdfgroup/hsds . ;
+    mkdir $ROOT_DIR ;
+    mkdir ${HOME}/buckets/hsds.test ;
+    ./runall.sh ;
+    echo "server starting..."
+    sleep 20 ;
+    cd - ;
   fi
 script:
 - echo h5_driver ${H5_DRIVER}
