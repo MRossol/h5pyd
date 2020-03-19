@@ -35,11 +35,17 @@ install:
     export HSDS_ENDPOINT=http://localhost:5101 ;
     export BUCKET_NAME=hsds.test ;
     docker build -t hdfgroup/hsds . ;
-    mkdir $ROOT_DIR ;
-    mkdir ${HOME}/buckets/hsds.test ;
+    if [ ! -d "$ROOT_DIR" ]; then
+      echo "mkdir $ROOT_DIR" ;
+      mkdir $ROOT_DIR ;
+    fi ;
+    if [ ! -d "${HOME}/buckets/hsds.test" ]; then
+      echo "mkdir ${HOME}/buckets/hsds.test" ;
+      mkdir ${HOME}/buckets/hsds.test ;
+    fi ;
     ./runall.sh ;
     echo "server starting..."
-    sleep 20 ;
+    sleep 60 ;
     cd - ;
   fi
 script:
