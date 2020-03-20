@@ -81,8 +81,8 @@ script:
 - echo password ${HS_PASSWORD}
 - echo test2_user ${TEST2_USERNAME}
 - echo test2 password ${TEST2_PASSWORD}
-- if [ "${H5_DRIVER}" == "hsds" ]; then
-    echo "setting up HSDS folders" ;
+- if [ "${H5_DRIVER}" == "hsds" ] ; then
+    echo setting up HSDS folders, PWD ${PWD} ;
     curl ${HS_ENDPOINT}/about ;
     python h5pyd/_apps/hstouch.py -u admin -p admin /home/ ;
     python h5pyd/_apps/hstouch.py  -u admin -p admin -o test_user1 /home/test_user1/ ;
