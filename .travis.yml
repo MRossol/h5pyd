@@ -44,7 +44,7 @@ install:
       mkdir ${HOME}/buckets/hsds.test ;
     fi ;
     ./runall.sh ;
-    echo "hsds server starting..."
+    echo "hsds server starting..." ;
     cd - ;
   fi
 script:
